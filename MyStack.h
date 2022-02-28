@@ -1,6 +1,8 @@
 #ifndef MYSTACK_H
 #define MYSTACK_H
 
+#include "Exception.h"
+
 template <class T>
 class MyStack;
 
@@ -115,6 +117,8 @@ void MyStack<T>::push(const T& newElem)
 template <class T>
 const T MyStack<T>::top() const
 {
+    if (countNode == 0)
+        throw stack_exc::EStackEmpty("Error! Stack empty, you can't get elem\n");
 
 	return head->elem;
 }
@@ -122,6 +126,8 @@ const T MyStack<T>::top() const
 template <class T>
 void MyStack<T>::pop()
 {
+    if (countNode == 0)
+        throw stack_exc::EStackEmpty("Error! Stack empty, you can't delete elem\n");
 
 	Node<T>* oldHead = head;
 	head = head->next;
