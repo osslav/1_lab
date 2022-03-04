@@ -5,34 +5,34 @@
 
 namespace stack_exc 
 {
-	class EStackException
+    class EStackException                                               //класс для исключений стека
 	{
 	private:
-		char* message;
+        char* message;                                                  //закрытое поле - сообщение о сработавшем исключении
 	public:
-		EStackException(const char* arg_message)
+        EStackException(const char* arg_message)                        //конструктор из константной строки
 		{
-			message = new char[strlen(arg_message) + 1];
+            message = new char[strlen(arg_message) + 1];
 			strcpy_s(message, strlen(arg_message) + 1, arg_message);
 		}
-		EStackException(const EStackException& arg)
+        EStackException(const EStackException& arg)                     //конструктор копирования
 		{
 			message = new char[strlen(arg.message) + 1];
 			strcpy_s(message, strlen(arg.message) + 1, arg.message);
 		}
-		~EStackException()
+        ~EStackException()                                              //деструктор
 		{
 			delete message;
 		}
-		const char* what() const { return message; }
+        const char* what() const { return message; }                    //функция, возвращающее константную строку - сообщение об исключении
 
 	};
 
-	class EStackEmpty : public EStackException
-	{
+    class EStackEmpty : public EStackException                          //класс наследник для EStackException, нужен для исключений, связанных с тем, что стек пуст
+    {                                                                   //новых полей не содержит - только поле с сообщением из EStackException
 	public:
-		explicit EStackEmpty(const char* arg) : EStackException(arg) {}
-		EStackEmpty(const EStackEmpty& arg) : EStackException(arg) {}
+        explicit EStackEmpty(const char* arg) : EStackException(arg) {}     //конструктор из константной строки, запрещено неявное использование
+        EStackEmpty(const EStackEmpty& arg) : EStackException(arg) {}       //конструктор копирования, неявное использование разрешено для работы catch()
 	};
 
 }
