@@ -22,7 +22,7 @@ namespace stack_exc
 		}
         ~EStackException()                                              //деструктор
 		{
-			delete message;
+            delete [] message;
 		}
         const char* what() const { return message; }                    //функция, возвращающее константную строку - сообщение об исключении
 
