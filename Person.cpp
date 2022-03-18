@@ -3,6 +3,8 @@
 Person::Person(const Person& copy)
 {
     first_name = copy.first_name;
+    last_name = copy.last_name;
+    patronymic = copy.patronymic;
 }
 
 const QString& Person::getLastName() const
@@ -17,7 +19,7 @@ const QString& Person::getFirstName() const
 
 const QString& Person::getPatronymic() const
 {
-    return first_name;
+    return patronymic;
 }
 
 void Person::setLastName(const QString& copy)
