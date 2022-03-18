@@ -18,6 +18,8 @@ public:
     void setLastName(const QString& copy);
     void setFirstName(const QString& copy);
     void setPatronymic(const QString& copy);
+
+    static const int COUNT_PART_NAME = 3;
 };
 
 
