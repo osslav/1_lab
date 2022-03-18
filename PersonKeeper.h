@@ -2,12 +2,12 @@
 #define PERSONKEEPER_H
 
 #include "Person.h"
+#include "MyStack.h"
+#include <QString>
 
 class PersonKeeper
 {
 private:
-    Person myPerson;
-
     PersonKeeper() {}
     ~PersonKeeper() {}
 
@@ -21,8 +21,8 @@ public:
         return p;
     }
 
-    bool readPersons(const std::string& fileName);
-    bool writePersons(const std::string& fileName);
+    MyStack<Person> readPersons(const QString& fileName);
+    void writePersons(MyStack<Person> stack, const QString& fileName);
 };
 
 #endif // PERSONKEEPER_H
