@@ -13,28 +13,28 @@ MyStack<Person> PersonKeeper::readPersons(const QString& fileName)
         QString string;
 
         string = stream.readLine();
-        while (!stream.atEnd())
+        while (string.length() != 0)
         {
             Person newPerson;
 
             int startIndex = -1, lenth = 0;
-            for (int partName = 1; partName <= 3; partName++)
+            for (int partName = 0; partName < Person::COUNT_PART_NAME; partName++)
             {
-                startIndex = lenth + 1;
+                startIndex = startIndex + lenth + 1;
                 lenth = 0;
 
-                while(string[startIndex + lenth] != '\n' && string[startIndex + lenth] != ' ')
+                while(startIndex + lenth < string.length() && string[startIndex + lenth] != ' ')
                     lenth++;
-                newPerson.setLastName(string.mid(startIndex, lenth));
 
                 switch(partName)
                 {
-                    case 1: newPerson.setLastName(string.mid(startIndex, lenth));
+                    case 0: newPerson.setLastName(string.mid(startIndex, lenth));
                     break;
-                    case 2: newPerson.setFirstName(string.mid(startIndex, lenth));
+                    case 1: newPerson.setFirstName(string.mid(startIndex, lenth));
                     break;
-                    case 3: newPerson.setPatronymic(string.mid(startIndex, lenth));
+                    case 2: newPerson.setPatronymic(string.mid(startIndex, lenth));
                 }
+
             }
 
             string = stream.readLine();
