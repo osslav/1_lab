@@ -1,23 +1,23 @@
 #ifndef PERSON_H
 #define PERSON_H
 
-#include <string>
+#include <QString>
 
 class Person
 {
 private:
-    std::string last_name;
-    std::string first_name;
-    std::string patronymic;
+    QString last_name;
+    QString first_name;
+    QString patronymic;
 public:
-    Person();
+    Person() {}
     Person(const Person&);
-    const std::string& getLastName() const;
-    const std::string& getFirstName() const;
-    const std::string& getPatronymic() const;
-    void setLastName(const std::string& copy);
-    void setFirstame(const std::string& copy);
-    void getPatronymic(const std::string& copy);
+    const QString& getLastName() const;
+    const QString& getFirstName() const;
+    const QString& getPatronymic() const;
+    void setLastName(const QString& copy);
+    void setFirstName(const QString& copy);
+    void setPatronymic(const QString& copy);
 };
 
 

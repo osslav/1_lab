@@ -5,32 +5,32 @@ Person::Person(const Person& copy)
     first_name = copy.first_name;
 }
 
-const std::string& Person::getLastName() const
+const QString& Person::getLastName() const
 {
     return last_name;
 }
 
-const std::string& Person::getFirstName() const
+const QString& Person::getFirstName() const
 {
     return first_name;
 }
 
-const std::string& Person::getPatronymic() const
+const QString& Person::getPatronymic() const
 {
     return first_name;
 }
 
-void Person::setLastName(const std::string& copy)
+void Person::setLastName(const QString& copy)
 {
     last_name = copy;
 }
 
-void Person::setFirstame(const std::string& copy)
+void Person::setFirstName(const QString& copy)
 {
     first_name = copy;
 }
 
-void Person::getPatronymic(const std::string& copy)
+void Person::setPatronymic(const QString& copy)
 {
     patronymic = copy;
 }
