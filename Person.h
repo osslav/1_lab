@@ -2,13 +2,13 @@
 #define PERSON_H
 
 #include <QString>
-
+//класс для хранения ФИО человека
 class Person
 {
 private:
-    QString last_name;
-    QString first_name;
-    QString patronymic;
+    QString last_name;      //фамилия
+    QString first_name;     //имя
+    QString patronymic;     //отчество
 public:
     Person() {}
     Person(const Person&);
@@ -19,7 +19,7 @@ public:
     void setFirstName(const QString& copy);
     void setPatronymic(const QString& copy);
 
-    static const int COUNT_PART_NAME = 3;
+    static const int COUNT_PART_NAME = 3;       //количество частей имени
 };
 
 
