@@ -112,6 +112,7 @@ void MyStack<T>::push(const T& newElem)                 //требуется к�
 	newHead->next = head;
 
     head = newHead;                                     //запись его в голову стека
+    countNode++;
 }
 
 template <class T>                                      //функция взятие элемента из головы стека

@@ -37,4 +37,38 @@ namespace stack_exc
 
 }
 
+namespace person_keeper_exc
+{
+    class EPersonKeeperException                                                //класс для исключений класса PersonKeeper
+    {
+    private:
+        char* message;                                                          //закрытое поле - сообщение о сработавшем исключении
+    public:
+        EPersonKeeperException(const char* arg_message)                         //конструктор из константной строки
+        {
+            message = new char[strlen(arg_message) + 1];
+            strcpy_s(message, strlen(arg_message) + 1, arg_message);
+        }
+        EPersonKeeperException(const EPersonKeeperException& arg)               //конструктор копирования
+        {
+            message = new char[strlen(arg.message) + 1];
+            strcpy_s(message, strlen(arg.message) + 1, arg.message);
+        }
+        ~EPersonKeeperException()                                               //деструктор
+        {
+            delete [] message;
+        }
+        const char* what() const { return message; }                            //функция, возвращающее константную строку - сообщение об исключении
+
+    };
+
+    class EStreamError : public EPersonKeeperException
+    {
+    public:
+        explicit EStreamError(const char* arg) : EPersonKeeperException(arg) {}
+        EStreamError(const EStreamError& arg) : EPersonKeeperException(arg) {}
+    };
+
+}
+
 #endif
