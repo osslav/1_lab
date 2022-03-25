@@ -2,6 +2,12 @@
 
 MyStack<Person> PersonKeeper::readPersons() const
 {
+    if (!stream)
+        throw person_keeper_exc::EStreamError("Error! Stream is nullptr, you can't read stack of persons\n");
+
+    if (!stream->device()->isReadable())
+        throw person_keeper_exc::EStreamError("Error! We can't read from stream\n");
+
     MyStack<Person> stack;
     QString string;
 
@@ -39,6 +45,13 @@ MyStack<Person> PersonKeeper::readPersons() const
 
 void PersonKeeper::writePersons(MyStack<Person> stack) const
 {
+    if (!stream)
+        throw person_keeper_exc::EStreamError("Error! Stream is nullptr, you can't read stack of persons\n");
+
+    if (!stream->device()->isWritable())
+        throw person_keeper_exc::EStreamError("Error! We can't write in stream\n");
+
+
     while (stack.getCount() > 0)
     {
         *stream << stack.top().getLastName() << ' ';
