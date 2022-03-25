@@ -4,10 +4,14 @@
 #include "Person.h"
 #include "MyStack.h"
 #include <QString>
+#include <QTextStream>
+#include <QFile>
 
 class PersonKeeper
 {
 private:
+    QTextStream* stream = nullptr;
+
     PersonKeeper() {}
     ~PersonKeeper() {}
 
@@ -21,8 +25,11 @@ public:
         return p;
     }
 
-    MyStack<Person> readPersons(const QString& fileName);
-    void writePersons(MyStack<Person> stack, const QString& fileName);
+    void setStream(QTextStream* newStream) { stream = newStream; }
+
+
+    MyStack<Person> readPersons() const;
+    void writePersons(MyStack<Person> stack) const;
 };
 
 #endif // PERSONKEEPER_H
