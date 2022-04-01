@@ -1,36 +1,27 @@
 #include "MyStack.h"
 #include "PersonKeeper.h"
 #include <QTextStream>
+
 QTextStream cout(stdout);
 
-int main()                                                          //тестовый пример
+QString testFileName("test_file4.txt");                                                     //имя тестового текстового файла
+
+int main()                                                                                  //тестовый пример
 {
     try
     {
-        Person arr[2];                                              //инициаллизация тестового стека
-        arr[0].setLastName("Ivanov");
-        arr[0].setFirstName("Ivan");
-        arr[0].setPatronymic("Ivanovich");
-        arr[1].setLastName("Sidorov");
-        arr[1].setFirstName("Sidor");
-        arr[1].setPatronymic("Sidorovich");
-        MyStack<Person> testStack(arr, 2);                          //создание тестовых стеков
+        QFile test_file(testFileName);                                                      //инициаллизация тестового файла
+        std::unique_ptr<QTextStream> streamFile(new QTextStream(&test_file));               //создание указателя на файловый поток
+        std::unique_ptr<QTextStream> streamCout(new QTextStream(stdout));                   //создание указателя на консольный поток вывода
+        PersonKeeper::instance().setStream(std::move(streamFile));                          //установка файлового потока в PersonKepeer
 
-        QFile test_file("test_file.txt");                           //создание потока для работы с файлом "test_file.txt"
-        std::unique_ptr<QTextStream> streamFile(new QTextStream(&test_file));
-        std::unique_ptr<QTextStream> streamCout(new QTextStream(stdout));
-        PersonKeeper::instance().setStream(std::move(streamFile));
+                                                                                            //чтение стека из тестового файла
+        test_file.open(QIODevice::ReadOnly);                                                //открытие файла на чтение
+        MyStack<Person> testStack2 = PersonKeeper::instance().readPersons();                //непосредственно чтение
+        test_file.close();                                                                  //закрытие файла
 
-        test_file.open(QIODevice::WriteOnly);                       //запись стека в файл
-        PersonKeeper::instance().writePersons(testStack);
-        test_file.close();
-
-        test_file.open(QIODevice::ReadOnly);                        //чтение стека из файла
-        MyStack<Person> testStack2 = PersonKeeper::instance().readPersons();
-        test_file.close();
-
-        PersonKeeper::instance().setStream(std::move(streamCout));                  //вывод прочитанных данных в консоль(для проверки)
-        PersonKeeper::instance().writePersons(testStack2);
+        PersonKeeper::instance().setStream(std::move(streamCout));                          //установка консольного потока в PersonKepeer
+        PersonKeeper::instance().writePersons(testStack2);                                  //вывод прочитанных данных в консоль(для проверки)
     }
     catch (const stack_exc::EStackEmpty & e)                        //отлов исключений, связанных с тем, что стек пуст
     {
