@@ -6,12 +6,13 @@
 #include <QString>
 #include <QTextStream>
 #include <QFile>
+#include <memory>
 
 //класс для чтения/записи стека из Person, выполнен по примеру паттерна Singleton
 class PersonKeeper
 {
 private:
-    QTextStream* stream = nullptr;                                                  //текущий поток
+    std::unique_ptr<QTextStream> stream;                                            //текущий поток
 
     PersonKeeper() {}                                                               //запрет на доступ снаружи для конструкторов, деструктора и оператора =
     ~PersonKeeper() {}
@@ -26,8 +27,8 @@ public:
         return p;
     }
 
-    void setStream(QTextStream* newStream) { stream = newStream; }                  //функция изменения текущего потока
-
+    void setStream(std::unique_ptr<QTextStream> newStream) { stream = std::move(newStream); }                   //функция установки текущего потока
+    std::unique_ptr<QTextStream> getStream() { auto outStream = std::move(stream); return outStream; }          //функция возврата текущего потока
 
     MyStack<Person> readPersons() const;                                            //чтение и запись из потока стека из элементов Person
     void writePersons(MyStack<Person> stack) const;

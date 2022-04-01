@@ -17,8 +17,9 @@ int main()                                                          //тесто
         MyStack<Person> testStack(arr, 2);                          //создание тестовых стеков
 
         QFile test_file("test_file.txt");                           //создание потока для работы с файлом "test_file.txt"
-        QTextStream* stream = new QTextStream(&test_file);
-        PersonKeeper::instance().setStream(stream);
+        std::unique_ptr<QTextStream> streamFile(new QTextStream(&test_file));
+        std::unique_ptr<QTextStream> streamCout(new QTextStream(stdout));
+        PersonKeeper::instance().setStream(std::move(streamFile));
 
         test_file.open(QIODevice::WriteOnly);                       //запись стека в файл
         PersonKeeper::instance().writePersons(testStack);
@@ -28,7 +29,7 @@ int main()                                                          //тесто
         MyStack<Person> testStack2 = PersonKeeper::instance().readPersons();
         test_file.close();
 
-        PersonKeeper::instance().setStream(&cout);                  //вывод прочитанных данных в консоль(для проверки)
+        PersonKeeper::instance().setStream(std::move(streamCout));                  //вывод прочитанных данных в консоль(для проверки)
         PersonKeeper::instance().writePersons(testStack2);
     }
     catch (const stack_exc::EStackEmpty & e)                        //отлов исключений, связанных с тем, что стек пуст
