@@ -10,8 +10,6 @@ private:
     QString first_name;     //имя
     QString patronymic;     //отчество
 public:
-    Person() {}
-    Person(const Person&);
     const QString& getLastName() const;
     const QString& getFirstName() const;
     const QString& getPatronymic() const;

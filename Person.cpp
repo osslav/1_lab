@@ -1,12 +1,5 @@
 #include "Person.h"
 
-Person::Person(const Person& copy)
-{
-    first_name = copy.first_name;
-    last_name = copy.last_name;
-    patronymic = copy.patronymic;
-}
-
 const QString& Person::getLastName() const
 {
     return last_name;
