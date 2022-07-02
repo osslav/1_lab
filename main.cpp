@@ -4,24 +4,29 @@
 
 QTextStream cout(stdout);
 
-QString testFileName("test_file4.txt");                                                     //имя тестового текстового файла
+QString testFileName("test_file1.txt");                                                     //имя тестового текстового файла
 
 int main()                                                                                  //тестовый пример
 {
     try
     {
         QFile test_file(testFileName);                                                      //инициаллизация тестового файла
-        std::unique_ptr<QTextStream> streamFile(new QTextStream(&test_file));               //создание указателя на файловый поток
-        std::unique_ptr<QTextStream> streamCout(new QTextStream(stdout));                   //создание указателя на консольный поток вывода
-        PersonKeeper::instance().setStream(std::move(streamFile));                          //установка файлового потока в PersonKepeer
+        if (test_file.exists())
+        {
+            std::unique_ptr<QTextStream> streamFile(new QTextStream(&test_file));               //создание указателя на файловый поток
+            std::unique_ptr<QTextStream> streamCout(new QTextStream(stdout));                   //создание указателя на консольный поток вывода
+            PersonKeeper::instance().setStream(std::move(streamFile));                          //установка файлового потока в PersonKepeer
 
-                                                                                            //чтение стека из тестового файла
-        test_file.open(QIODevice::ReadOnly);                                                //открытие файла на чтение
-        MyStack<Person> testStack2 = PersonKeeper::instance().readPersons();                //непосредственно чтение
-        test_file.close();                                                                  //закрытие файла
+                                                                                                //чтение стека из тестового файла
+            test_file.open(QIODevice::ReadOnly);                                                //открытие файла на чтение
+            MyStack<Person> testStack2 = PersonKeeper::instance().readPersons();                //непосредственно чтение
+            test_file.close();                                                                  //закрытие файла
 
-        PersonKeeper::instance().setStream(std::move(streamCout));                          //установка консольного потока в PersonKepeer
-        PersonKeeper::instance().writePersons(testStack2);                                  //вывод прочитанных данных в консоль(для проверки)
+            PersonKeeper::instance().setStream(std::move(streamCout));                          //установка консольного потока в PersonKepeer
+            PersonKeeper::instance().writePersons(testStack2);                                  //вывод прочитанных данных в консоль(для проверки)
+        }
+        else
+            cout << "Error. File not exist\n";
     }
     catch (const stack_exc::EStackEmpty & e)                        //отлов исключений, связанных с тем, что стек пуст
     {
